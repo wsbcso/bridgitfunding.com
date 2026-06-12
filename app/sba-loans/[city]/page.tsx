@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { cities } from '@/lib/cities'
 import { loanTypes, industries } from '@/lib/locationData'
 import { neighborhoodsByCitySlug } from '@/lib/neighborhoods'
+import { stateLoanData, formatDollars, formatCount } from '@/lib/stateLoanData'
 
 export const revalidate = 86400
 
@@ -24,6 +25,8 @@ export default function CityPage({ params }: { params: { city: string } }) {
   const topIndustryData = city.topIndustries
     .map((slug) => industries.find((i) => i.slug === slug))
     .filter(Boolean) as typeof industries
+
+  const stateData = stateLoanData[city.state]
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -72,6 +75,45 @@ export default function CityPage({ params }: { params: { city: string } }) {
             </div>
           </div>
         </section>
+
+        {stateData && (
+          <section className="section-card bg-light">
+            <div className="container">
+              <h2>{stateData.stateName} SBA 7(a) Lending Data (FY2020–FY2025)</h2>
+              <p>
+                {city.name} businesses borrow under SBA 7(a) loans approved for {stateData.stateName} borrowers.
+                Based on SBA FOIA loan-level data, {stateData.stateName} ranks #{stateData.rank} nationally
+                by total SBA 7(a) loan volume over the past six fiscal years.
+              </p>
+              <div className="stat-grid">
+                <div className="stat-card">
+                  <div className="stat-value">{formatCount(stateData.loanCount)}</div>
+                  <div className="stat-label">{stateData.stateName} 7(a) loans, FY2020–2025</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-value">{formatDollars(stateData.totalDollars)}</div>
+                  <div className="stat-label">Total volume, FY2020–2025</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-value">{formatDollars(stateData.avgLoan)}</div>
+                  <div className="stat-label">Average loan size</div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-value">{formatCount(stateData.fy2025Count)}</div>
+                  <div className="stat-label">{stateData.stateName} loans approved, FY2025</div>
+                </div>
+              </div>
+              <div className="lender-note">
+                <strong>Most active lender in {stateData.stateName}:</strong> {stateData.topLenderInState} is among the highest-volume
+                SBA 7(a) lenders for {stateData.stateName} borrowers, based on FOIA loan-count data FY2020–2025.
+                Bridgit works with {stateData.topLenderInState} and 49 other SBA lenders to find the right fit for your {city.name} deal.
+              </div>
+              <p className="data-source-note">
+                Source: <a href="https://data.sba.gov/en/dataset/7-a-504-foia" target="_blank" rel="noopener noreferrer">SBA FOIA 7(a) Dataset</a>, FY2020–FY2025. Figures reflect loans to borrowers headquartered in {stateData.stateName}.
+              </p>
+            </div>
+          </section>
+        )}
 
         <section className="section-card bg-light">
           <div className="container">
