@@ -858,3 +858,6 @@ footer { background: var(--dark-mid); padding: 56px 0 32px; }
 .cta-section p { color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto 1.5rem; line-height: 1.6; }
 .btn-primary { display: inline-block; background: #3b6ef0; color: #fff; padding: 0.85rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: background 0.15s; }
 .btn-primary:hover { background: #2a57d4; }
+
+.data-source-note { font-size: 0.8rem; color: #888; margin-top: 1rem; }
+.data-source-note a { color: #3b6ef0; text-decoration: none; }
