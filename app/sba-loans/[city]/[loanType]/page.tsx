@@ -133,7 +133,7 @@ export default function CityLoanTypePage({ params }: { params: { city: string; l
           </div>
         </section>
 
-        {/* Industry combos (acquisition types only) */}
+        {/* Industry combos (acquisition types only) — informational, not linked pages */}
         {isAcquisition && (
           <section className="section-card">
             <div className="container">
@@ -141,31 +141,16 @@ export default function CityLoanTypePage({ params }: { params: { city: string; l
               <p>These categories have the most active SBA buyer and lender interest in the {city.name} market right now.</p>
               <div className="industry-combo-grid">
                 {topIndustryData.map((ind) => (
-                  <Link key={ind.slug} href={`/sba-loans/${city.slug}/${lt.slug}/${ind.slug}`} className="industry-combo-card">
+                  <div key={ind.slug} className="industry-combo-card">
                     <div className="combo-name">{ind.name}</div>
                     <div className="combo-multiple">{ind.sdeMultiple}</div>
                     <div className="combo-note">{ind.note}</div>
-                    <div className="combo-cta">View {city.name} details →</div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             </div>
           </section>
         )}
-
-        {/* All industries for this loan type */}
-        <section className="section-card bg-light">
-          <div className="container">
-            <h2>All Industries — {lt.name} in {city.name}</h2>
-            <div className="industry-link-grid">
-              {industries.map((ind) => (
-                <Link key={ind.slug} href={`/sba-loans/${city.slug}/${lt.slug}/${ind.slug}`} className="industry-link">
-                  {ind.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Other loan types */}
         <section className="section-card">
