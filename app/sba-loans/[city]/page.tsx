@@ -149,11 +149,7 @@ export default function CityPage({ params }: { params: { city: string } }) {
               <tbody>
                 {topIndustryData.map((ind) => (
                   <tr key={ind.slug}>
-                    <td>
-                      <Link href={`/sba-loans/${city.slug}/business-acquisition/${ind.slug}`}>
-                        {ind.name}
-                      </Link>
-                    </td>
+                    <td>{ind.name}</td>
                     <td>{ind.sdeMultiple}</td>
                     <td>{ind.note}</td>
                   </tr>
@@ -180,19 +176,6 @@ export default function CityPage({ params }: { params: { city: string } }) {
             </div>
           </section>
         )}
-
-        <section className="section-card">
-          <div className="container">
-            <h2>All Industries — {city.name} SBA Loans</h2>
-            <div className="industry-link-grid">
-              {industries.map((ind) => (
-                <Link key={ind.slug} href={`/sba-loans/${city.slug}/business-acquisition/${ind.slug}`} className="industry-link">
-                  {ind.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
 
         <section className="section-card bg-dark">
           <div className="container cta-section">
